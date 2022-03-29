@@ -12,6 +12,7 @@ export const text = {
   MyPhotos: 'My Photos',
   LogOut: 'Log Out',
   Home: 'Home',
+  UrlApi: 'https://challenge.maniak.co/api/login?username=challenge@maniak.co&password=maniak2020'
 };
 
 export const colors = {

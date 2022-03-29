@@ -1,7 +1,10 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import {StackActions} from '@react-navigation/native';
 
-const Home = () => {
+const Home = ({navigation}) => {
+  
   return (
     <View>
       <Text>Home</Text>

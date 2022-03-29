@@ -12,18 +12,22 @@ export const styles = StyleSheet.create({
         fontWeight: '400',
         marginTop: '30%',
         color: colors.grayMain,
+        fontFamily: 'Roboto',
     },
     welcomeText: {
         fontSize: 14, 
         fontWeight: '400',
         marginBottom: 85,
         color: colors.grayMain,
+        fontFamily: 'Roboto',
     },
     textMail: {
         fontSize: 12, 
         fontWeight: '400',
         paddingBottom: 4,
         color: colors.grayMain,
+        fontFamily: 'Roboto',
+
     },
     inputMail: {
         fontSize: 14,
