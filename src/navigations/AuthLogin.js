@@ -1,21 +1,15 @@
-import { View, Text, ActivityIndicator } from 'react-native'
-import React, {useEffect} from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LoginForm } from './Navigations';
-import { Auth } from './Navigations';
+import React from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Login from '../screens/Login';
 
-const AuthLogin = ({navigation}) => { 
-    useEffect(() => {
-        AsyncStorage.getItem('token')
-        .then(x => {
-            navigation.navigate(x ? 'LoginForm' : 'Auth')
-        })
-    }, [])
+const Stack = createNativeStackNavigator();
+
+const AuthLogin = () => {
   return (
-    <View>
-      <ActivityIndicator></ActivityIndicator>
-    </View>
-  )
-}
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
+  );
+};
 
-export default AuthLogin
+export default AuthLogin;
