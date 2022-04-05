@@ -1,20 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {
-  View,
-  Text,
+  View, 
   StatusBar,
-  FlatList,
-  TouchableOpacity,
-  Image,
+  FlatList, 
 } from 'react-native';
-import {text} from '../utils/Constants';
+import {text, colors} from '../utils/Constants';
 import RenderApiInfo from '../components/RenderApiInfo';
 import {styles} from '../styles/HomeStyles';
+import Header from '../components/Header';
+import Tab from '../components/Tab';
+import { connect } from 'react-redux';
 
-const HomeIcon = require('../utils/images/HomeIcon.png');
-
-const Home = ({route}) => {
-  const token = route.params;
+const Home = ({token}) => { 
 
   const [apiResponse, setApiResponse] = useState([]);
 
@@ -23,7 +20,7 @@ const Home = ({route}) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token.token}`,
       },
     })
       .then(response => response.text())
@@ -32,7 +29,7 @@ const Home = ({route}) => {
       })
       .then(response => {
         const responseToJson = JSON.parse(response);
-        setApiResponse(responseToJson);
+        setApiResponse(responseToJson); 
       });
   };
 
@@ -42,13 +39,8 @@ const Home = ({route}) => {
 
   return (
     <View style={styles.mainContainer}>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-      <View style={styles.headerContainer}>
-        <Text style={styles.myPhotosText}>{text.MyPhotos}</Text>
-        <TouchableOpacity>
-          <Text style={styles.logOutText}>{text.LOGOUT}</Text>
-        </TouchableOpacity>
-      </View>
+      <StatusBar backgroundColor={colors.white} barStyle={text.DarkContent} />
+      <Header/>
       <FlatList
         data={apiResponse}
         keyExtractor={apiResponse.id}
@@ -57,17 +49,18 @@ const Home = ({route}) => {
           <RenderApiInfo
             title={item.title}
             description={item.description}
-            imageUrlProp={item.image}></RenderApiInfo>
+            imageUrlProp={item.image}/>
         )}
       />
-      <View style={styles.tabContainer}>
-        <TouchableOpacity>
-          <Image style={styles.iconTab} source={HomeIcon} />
-        </TouchableOpacity>
-        <Text>{text.Home}</Text>
-      </View>
+      <Tab/>
     </View>
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return { 
+    token: state.LoginReducer
+  }
+}
+
+export default connect(mapStateToProps, null)(Home)

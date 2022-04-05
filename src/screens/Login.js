@@ -1,91 +1,57 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   StatusBar,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-  Image,
-  Alert,
+  TouchableOpacity, 
+  KeyboardAvoidingView, 
 } from 'react-native';
 import {styles} from '../styles/LoginStyles';
-import {text} from '../utils/Constants';
-import useForm from '../hooks/useForm';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {text, colors} from '../utils/Constants'; 
+import Title from '../components/Title';
+import Input from '../components/Input'; 
+import InputPassword from '../components/InputPassword';
+import LogInButton from '../components/LogInButton';
+import HaveAnAccount from '../components/HaveAnAccount';
+import {handleEmailChange, handlePasswordChange} from '../utils/Functions/Functions';
 
-const HidePassword = require('../utils/images/HidePassword.png');
-
-const Login = ({navigation}) => {
-  const initialState = {
+const Login = () => {
+  const [formValues, setFormValues] = useState({
     email: '',
     password: '',
-  };
-
-  const onSubmit = values => {
-    fetch(text.UrlApi, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    })
-      .then(response => response.text())
-      .then(response => {
-        return JSON.parse(response);
-      })
-      .then(response => {
-        AsyncStorage.setItem('token', response.token);
-        const token = response.token;
-        navigation.navigate('Home', token);
-      })
-      .catch(e =>
-        Alert.alert('Error', 'Mail or password incorrect ' + e.error),
-      );
-  };
-
-  const {suscribe, inputs, handleSubmit} = useForm(initialState, onSubmit);
+  });
 
   return (
     <KeyboardAvoidingView style={styles.mainContainer}>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-      <Text style={styles.loginText}>{text.Login}</Text>
-      <Text style={styles.welcomeText}>{text.Welcome}</Text>
-
-      <Text style={styles.textMail}>{text.EMAIL}</Text>
-      <TextInput
-        value={inputs.email}
-        onChangeText={suscribe('email')}
-        style={styles.inputMail}
-        placeholder="Email"
+      <StatusBar backgroundColor={colors.white} barStyle={text.DarkContent} />
+      <Title title ={text.Login} subtitle={text.Welcome}/> 
+      <Input
+        formValues={formValues}
+        setFormValues={setFormValues}
+        inputLabel={text.EMAIL}
+        value={formValues.email}
+        handleChange={handleEmailChange}
+        placeholder={text.Email}
       />
 
-      <Text style={styles.textPassword}>{text.PASSWORD}</Text>
-      <View style={styles.mainContainerPassword}>
-        <TextInput
-          value={inputs.password}
-          onChangeText={suscribe('password')}
-          style={styles.inputPassword}
-          placeholder="Password"
-          secureTextEntry={true}
-        />
-        <TouchableOpacity>
-          <Image style={styles.hidePassword} source={HidePassword}></Image>
-        </TouchableOpacity>
-      </View>
+      <InputPassword
+        formValues={formValues}
+        setFormValues={setFormValues}
+        inputLabel={text.PASSWORD}
+        value={formValues.password}
+        handleChange={handlePasswordChange}
+        placeholder={text.Password}
+      />
 
       <TouchableOpacity>
         <Text style={styles.forgotText}>{text.ForgotPassword}</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>{text.LOGIN}</Text>
-      </TouchableOpacity>
 
-      <View style={styles.signUpContainer}>
-        <Text style={styles.dontHaveAccountText}>{text.DontHaveAccount}</Text>
-        <TouchableOpacity>
-          <Text style={styles.signUpTextContainer}>{text.SignUp}</Text>
-        </TouchableOpacity>
-      </View>
+      <LogInButton
+        formValues={formValues}
+      />
+ 
+      <HaveAnAccount/> 
     </KeyboardAvoidingView>
   );
 };

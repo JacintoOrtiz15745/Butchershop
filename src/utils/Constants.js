@@ -1,4 +1,5 @@
 export const text = {
+  DarkContent: 'dark-content',
   Login: 'Log In',
   Welcome: 'Welcome back',
   EMAIL: 'EMAIL',
