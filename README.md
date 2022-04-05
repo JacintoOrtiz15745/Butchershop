@@ -10,5 +10,5 @@ To fetch the token and make the login Auth
 1. https://challenge.maniak.co/api/login?username=challenge@maniak.co&password=maniak2020
 
 To fetch the data
-3. https://challenge.maniak.co/api/images
+2. https://challenge.maniak.co/api/images
  
