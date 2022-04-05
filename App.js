@@ -1,14 +1,21 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import Navigations from './src/navigations/Navigations';
+import Navigations from './src/navigations/Navigations';     
+import AuthLogin from './src/navigations/AuthLogin';
+import { connect } from 'react-redux';
 
-const App = () => {
+const App = ({Auth}) => {  
   return (
     <NavigationContainer>
-      <Navigations></Navigations>
+      {!Auth.isLoggedIn ? <Navigations/> : <AuthLogin/>} 
     </NavigationContainer>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    Auth: state.LoginReducer
+  }
+}
+
+export default connect(mapStateToProps, null)(App) 

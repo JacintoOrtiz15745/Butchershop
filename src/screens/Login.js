@@ -1,33 +1,57 @@
-import {View, Text, Button, TouchableOpacity, TextInput, KeyboardAvoidingView, Image} from 'react-native';
-import React from 'react';
-import { styles } from '../styles/LoginStyles';
-import {text} from '../utils/Constants'
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StatusBar,
+  TouchableOpacity, 
+  KeyboardAvoidingView, 
+} from 'react-native';
+import {styles} from '../styles/LoginStyles';
+import {text, colors} from '../utils/Constants'; 
+import Title from '../components/Title';
+import Input from '../components/Input'; 
+import InputPassword from '../components/InputPassword';
+import LogInButton from '../components/LogInButton';
+import HaveAnAccount from '../components/HaveAnAccount';
+import {handleEmailChange, handlePasswordChange} from '../utils/Functions/Functions';
 
-const HidePassword = require('../utils/images/HidePassword.png')
+const Login = () => {
+  const [formValues, setFormValues] = useState({
+    email: '',
+    password: '',
+  });
 
-const Login = ({navigation}) => {
-  return ( 
+  return (
     <KeyboardAvoidingView style={styles.mainContainer}>
-        <Text style={styles.loginText}>{text.Login}</Text>
-        <Text style={styles.welcomeText}>{text.Welcome}</Text>
+      <StatusBar backgroundColor={colors.white} barStyle={text.DarkContent} />
+      <Title title ={text.Login} subtitle={text.Welcome}/> 
+      <Input
+        formValues={formValues}
+        setFormValues={setFormValues}
+        inputLabel={text.EMAIL}
+        value={formValues.email}
+        handleChange={handleEmailChange}
+        placeholder={text.Email}
+      />
 
-        <Text style={styles.textMail}>{text.EMAIL}</Text>
-        <TextInput style={styles.inputMail} placeholder='Email'/>
+      <InputPassword
+        formValues={formValues}
+        setFormValues={setFormValues}
+        inputLabel={text.PASSWORD}
+        value={formValues.password}
+        handleChange={handlePasswordChange}
+        placeholder={text.Password}
+      />
 
-        <Text style={styles.textPassword}>{text.PASSWORD}</Text>
-        <View style={styles.mainContainerPassword}> 
-            <TextInput style={styles.inputPassword} placeholder='Password' secureTextEntry={true}/>
-            <TouchableOpacity><Image style={styles.hidePassword} source={HidePassword}></Image></TouchableOpacity>
-        </View>
-        
+      <TouchableOpacity>
+        <Text style={styles.forgotText}>{text.ForgotPassword}</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity><Text style={styles.forgotText}>{text.ForgotPassword}</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}><Text style={styles.buttonText}>{text.LOGIN}</Text></TouchableOpacity>
-    
-        <View style={styles.signUpContainer}>
-            <Text style={styles.dontHaveAccountText}>{text.DontHaveAccount}</Text> 
-            <TouchableOpacity><Text style={styles.signUpTextContainer}>{text.SignUp}</Text></TouchableOpacity>
-        </View>
+      <LogInButton
+        formValues={formValues}
+      />
+ 
+      <HaveAnAccount/> 
     </KeyboardAvoidingView>
   );
 };
