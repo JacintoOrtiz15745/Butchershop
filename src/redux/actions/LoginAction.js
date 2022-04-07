@@ -1,7 +1,6 @@
 import {SET_LOGIN_STATE, SET_LOGOUT_STATE} from '../types';
 import {text} from '../../utils/Constants';
-import {Alert} from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Alert} from 'react-native' 
 
 export const logIn = (token) => {
   return {

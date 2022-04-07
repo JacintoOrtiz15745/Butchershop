@@ -1,19 +1,21 @@
 import React, {useState} from 'react';
 import {
-  View,
   Text,
   StatusBar,
-  TouchableOpacity, 
-  KeyboardAvoidingView, 
+  TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {styles} from '../styles/LoginStyles';
-import {text, colors} from '../utils/Constants'; 
+import {text, colors} from '../utils/Constants';
 import Title from '../components/Title';
-import Input from '../components/Input'; 
+import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
 import LogInButton from '../components/LogInButton';
 import HaveAnAccount from '../components/HaveAnAccount';
-import {handleEmailChange, handlePasswordChange} from '../utils/Functions/Functions';
+import {
+  handleEmailChange,
+  handlePasswordChange,
+} from '../utils/Functions/Functions';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({
@@ -24,7 +26,7 @@ const Login = () => {
   return (
     <KeyboardAvoidingView style={styles.mainContainer}>
       <StatusBar backgroundColor={colors.white} barStyle={text.DarkContent} />
-      <Title title ={text.Login} subtitle={text.Welcome}/> 
+      <Title title={text.Login} subtitle={text.Welcome} />
       <Input
         formValues={formValues}
         setFormValues={setFormValues}
@@ -47,11 +49,9 @@ const Login = () => {
         <Text style={styles.forgotText}>{text.ForgotPassword}</Text>
       </TouchableOpacity>
 
-      <LogInButton
-        formValues={formValues}
-      />
- 
-      <HaveAnAccount/> 
+      <LogInButton formValues={formValues} />
+
+      <HaveAnAccount />
     </KeyboardAvoidingView>
   );
 };

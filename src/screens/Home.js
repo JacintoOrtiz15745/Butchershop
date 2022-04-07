@@ -1,66 +1,50 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View, 
-  StatusBar,
-  FlatList, 
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StatusBar, FlatList} from 'react-native';
 import {text, colors} from '../utils/Constants';
 import RenderApiInfo from '../components/RenderApiInfo';
 import {styles} from '../styles/HomeStyles';
 import Header from '../components/Header';
 import Tab from '../components/Tab';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import {fetchHomeDataFunction} from '../redux/actions/HomeActions';
 
-const Home = ({token}) => { 
-
-  const [apiResponse, setApiResponse] = useState([]);
-
-  const fecthApiImages = () => {
-    fetch(text.UrlApiImages, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token.token}`,
-      },
-    })
-      .then(response => response.text())
-      .then(response => {
-        return response;
-      })
-      .then(response => {
-        const responseToJson = JSON.parse(response);
-        setApiResponse(responseToJson); 
-      });
-  };
+const Home = ({token, fetchHomeDataFunction, data}) => {
+  const tokenToFetch = token.token;
 
   useEffect(() => {
-    fecthApiImages();
+    fetchHomeDataFunction(tokenToFetch);
   }, []);
 
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor={colors.white} barStyle={text.DarkContent} />
-      <Header/>
+      <Header />
       <FlatList
-        data={apiResponse}
-        keyExtractor={apiResponse.id}
+        data={data.dataFetchHome}
+        keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
           <RenderApiInfo
             title={item.title}
             description={item.description}
-            imageUrlProp={item.image}/>
+            imageUrlProp={item.image}
+          />
         )}
       />
-      <Tab/>
+      <Tab />
     </View>
   );
 };
 
-const mapStateToProps = (state) => {
-  return { 
-    token: state.LoginReducer
-  }
-}
+const mapStateToProps = state => {
+  return {
+    token: state.LoginReducer,
+    data: state.HomeReducer,
+  };
+};
 
-export default connect(mapStateToProps, null)(Home)
+const mapDispatchToProps = {
+  fetchHomeDataFunction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
