@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {text} from '../utils/Constants';
-import {styles} from '../styles/TabStyles'
+import {styles} from '../styles/TabStyles';
 
 const HomeIcon = require('../utils/images/HomeIcon.png');
 

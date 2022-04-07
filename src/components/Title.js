@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {styles} from '../styles/TitleStyles'; 
+import {styles} from '../styles/TitleStyles';
 
-const Title = (props) => {
-    const { title, subtitle } = props
+const Title = props => {
+  const {title, subtitle} = props;
   return (
     <View>
       <Text style={styles.loginText}>{title}</Text>
